@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">DatabaseTest</string>
+    <string name="email">Enter your email</string>
+    <string name="password">Enter your password</string>
+    <string name="registerButton">Register</string>
+    <string name="signIn">Already Registered? Sign in here</string>
+    <string name="signUp">Not yet a member? Sign up Here</string>
+    <string name="userRegistrationText">Sign In</string>
+</resources>
