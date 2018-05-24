@@ -5,34 +5,25 @@
     android:id="@+id/s"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:windowSoftInputMode="adjustResize"
     tools:context=".ProfileActivity">
 
     <TextView
         android:id="@+id/userEmailText"
-        android:layout_width="183dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_width="420dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="7dp"
         android:layout_marginTop="22dp"
         android:text="User Email"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="208dp"
-        android:text="Logout" />
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="59dp"
+        android:layout_below="@+id/userEmailText"
+        android:layout_marginTop="-7dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Enter your name" />
@@ -41,19 +32,31 @@
         android:id="@+id/editTextAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="118dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextName"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Enter address" />
 
     <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_centerInParent="true"
+        android:text="Logout" />
+
+    <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="173dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextAddress"
         android:text="Save Information " />
+
+    <ListView
+        android:id="@+id/listviewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="225dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

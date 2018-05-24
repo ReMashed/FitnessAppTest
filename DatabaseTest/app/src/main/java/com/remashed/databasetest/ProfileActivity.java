@@ -1,18 +1,27 @@
 package com.remashed.databasetest;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
@@ -21,15 +30,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button buttonLogout;
 
     private DatabaseReference databaseReference;
+    private ListView listViewUser;
 
     private EditText editTextName, editTextAddress;
     private Button buttonSave;
+
+    private List<UserInformation> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         firebaseAuth = FirebaseAuth.getInstance();
 
         //if condition is true, user is not logged in
@@ -44,6 +56,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         buttonSave =  (Button) findViewById(R.id.saveButton);
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
+        listViewUser = (ListView) findViewById(R.id.listviewUser);
+        userList = new ArrayList<>();
+
         textViewUserEmail = (TextView) findViewById(R.id.userEmailText);
         textViewUserEmail.setText("Welcome " + user.getEmail());
 
@@ -51,6 +66,34 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         buttonLogout.setOnClickListener(this);
         buttonSave.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //method executed everytime we change something in the database
+                userList.clear(); //clear list, to store the most current data in the database
+
+                for(DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
+                    UserInformation user = userSnapShot.getValue(UserInformation.class);
+
+                    userList.add(user);
+                }
+
+                 UserList adapter = new UserList(ProfileActivity.this, userList);
+                listViewUser.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void saveUserInformation() {

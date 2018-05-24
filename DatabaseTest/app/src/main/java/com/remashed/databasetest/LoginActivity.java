@@ -73,15 +73,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         //if validations are ok
         //will first show a progress bar
-        progressDialog.setMessage("Registering user...");
-        progressDialog.show();
+       // progressDialog.setMessage("Logging In ...");
+       // progressDialog.show();
 
         //Inner oncomplete method wil be called when sign in is complete
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+                       // progressDialog.dismiss();
 
                         if(task.isSuccessful()){
                             //start a profile activity
@@ -89,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             //user getApplicationContext();
                             finish();
                             startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        } else if (!task.isSuccessful()) {
+                            Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                         }
 
                     }
